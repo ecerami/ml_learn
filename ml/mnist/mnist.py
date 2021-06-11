@@ -20,7 +20,7 @@ class MnistPipeline:
         X_train = X[:60000]
         y_train = y[:60000]
         X_test = X[60000:]
-        y_test = y[:60000]
+        y_test = y[60000:]
         print(f"Training data frame: {X_train.shape[0]} x {X_train.shape[1]}.")
 
         print("Creating and Cross-Validating KNeighbors Classifier.")
