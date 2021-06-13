@@ -13,10 +13,12 @@ numpy==1.20.3
 pandas==1.2.4
 pathspec==0.8.1
 Pillow==8.2.0
+progressbar2==3.53.1
 pycodestyle==2.7.0
 pyflakes==2.3.1
 pyparsing==2.4.7
 python-dateutil==2.8.1
+python-utils==2.5.6
 pytz==2021.1
 regex==2021.4.4
 scikit-learn==0.24.2
