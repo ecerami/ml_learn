@@ -2,6 +2,7 @@
 ML Command Line Interface (CLI).
 """
 import logging
+from ml.mnist.mnist_shift import MnistShiftPipeline
 from ml.mnist.mnist import MnistPipeline
 import click
 import emoji
@@ -22,6 +23,14 @@ def mnist():
     """Run the MNIST Classifier Pipeline."""
     output_header("Running the MNIST Classifier Pipeline.")
     pipeline = MnistPipeline()
+    pipeline.execute_pipeline()
+
+
+@cli.command()
+def mnist_augment():
+    """Run the MNIST Classifier Pipeline with Augmented Data."""
+    output_header("Running the MNIST Classifier Pipeline with Augmented Data.")
+    pipeline = MnistShiftPipeline()
     pipeline.execute_pipeline()
 
 
