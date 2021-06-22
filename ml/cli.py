@@ -2,6 +2,7 @@
 ML Command Line Interface (CLI).
 """
 import logging
+from ml.titanic.titanic import TitanicPipeline
 from ml.mnist.mnist_shift import MnistShiftPipeline
 from ml.mnist.mnist import MnistPipeline
 import click
@@ -31,6 +32,14 @@ def mnist_augment():
     """Run the MNIST Classifier Pipeline with Augmented Data."""
     output_header("Running the MNIST Classifier Pipeline with Augmented Data.")
     pipeline = MnistShiftPipeline()
+    pipeline.execute_pipeline()
+
+
+@cli.command()
+def titanic():
+    """Run the Titanic Classifier Pipeline."""
+    output_header("Running the Titanic Classifier Pipeline.")
+    pipeline = TitanicPipeline()
     pipeline.execute_pipeline()
 
 
