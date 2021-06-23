@@ -54,7 +54,7 @@ class TitanicPipeline:
         submission_df["PassengerId"] = passengerIds
         submission_df["Surived"] = survived
         out_name = "out/titanic_predictions.csv"
-        print (f"Writing predicions to {out_name}.")
+        print (f"Writing predictions to {out_name}.")
         submission_df.to_csv(out_name, sep=",", index=False)
 
     def assess_model(self, name, model, train_X, train_y):
