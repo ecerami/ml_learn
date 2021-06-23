@@ -52,7 +52,7 @@ class TitanicPipeline:
         survived = svc.predict(test_X)
         submission_df = pd.DataFrame()
         submission_df["PassengerId"] = passengerIds
-        submission_df["Surived"] = survived
+        submission_df["Survived"] = survived
         out_name = "out/titanic_predictions.csv"
         print (f"Writing predictions to {out_name}.")
         submission_df.to_csv(out_name, sep=",", index=False)
