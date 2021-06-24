@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import Binarizer
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 
@@ -11,8 +12,9 @@ class TitanicPrep:
     """Prepare the Titanic Data Set."""
 
     drop_columns = ["PassengerId", "Name", "Ticket", "Cabin"]
-    num_columns = ["SibSp", "Parch", "Age", "Fare"]
+    num_columns = ["SibSp", "Parch", "Fare"]
     cat_columns = ["Embarked", "Pclass", "Sex"]
+    age_column = ["Age"]
 
     def __init__(self):
         """Construct prep pipeline."""
@@ -31,11 +33,19 @@ class TitanicPrep:
             ]
         )
 
+        age_pipeline = Pipeline(
+            [
+                ("impute", SimpleImputer(strategy="median")),
+                ("binarize", Binarizer(threshold=18.0)),
+            ]
+        )
+
         self.pipeline = ColumnTransformer(
             [
                 ("drop", "drop", self.drop_columns),
                 ("impute_ohe", impute_ohe, self.cat_columns),
                 ("impute_scale", impute_scale, self.num_columns),
+                ("age_binarize", age_pipeline, self.age_column),
             ]
         )
         self.pipeline.fit(training_df)
@@ -52,5 +62,6 @@ class TitanicPrep:
         new_columns = []
         new_columns.extend(cat_list)
         new_columns.extend(self.num_columns)
+        new_columns.append("Adult")
         new_X.columns = new_columns
         return new_X

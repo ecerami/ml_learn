@@ -26,8 +26,8 @@ def test_titanic_prep():
     assert row0.Sex_female == 0
     assert row0.Sex_male == 1
 
+    assert row0.Adult == 1
+
     # Verify MinMax Scaling
-    assert training_X_prepared["Age"].max() <= 1
-    assert training_X_prepared["Age"].min() >= 0
     assert training_X_prepared["Fare"].max() <= 1
     assert training_X_prepared["Fare"].min() >= 0
