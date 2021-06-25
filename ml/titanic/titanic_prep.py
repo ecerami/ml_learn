@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import Binarizer
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
@@ -23,7 +24,7 @@ class TitanicPrep:
         impute_scale = Pipeline(
             [
                 ("impute", SimpleImputer(strategy="median")),
-                ("scale", MinMaxScaler()),
+                ("scale", StandardScaler()),
             ]
         )
         impute_ohe = Pipeline(
@@ -36,7 +37,7 @@ class TitanicPrep:
         age_pipeline = Pipeline(
             [
                 ("impute", SimpleImputer(strategy="median")),
-                ("binarize", Binarizer(threshold=18.0)),
+                ("binarize", Binarizer(threshold=12.0)),
             ]
         )
 
