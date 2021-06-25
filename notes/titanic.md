@@ -27,7 +27,27 @@ Support Vector = 0.8171
 Ada Boost = 0.7789
 Random Forest = 0.7980
 
-SVC is still the winner, and it is marginally better.
+SVC is still the winner, and it is only marginally better.
 
 Kaggle score:  0.77511 (no change!)
 
+Verdict:  didn't help any.
+
+But, changing the threshold to 12.0 seemed to help a tiny bit more:
+
+Support Vector = 0.8260
+
+## Experiment #3
+
+Switched from MinMaxScaler to StandardScaler.
+
+KNeighbors = 0.8103
+SGD = 0.7912
+Naive Bayes = 0.7755
+Support Vector = 0.8305
+Ada Boost = 0.7856
+Random Forest = 0.8070
+
+SVC still the winner, but is only marginally better.
+
+Kaggle score:  0.77751 (no change again!)
