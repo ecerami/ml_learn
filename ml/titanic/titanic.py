@@ -66,4 +66,4 @@ class TitanicPipeline:
             verbose=0,
             scoring="accuracy",
         )
-        print(f"{name}: mean acc={results.mean():.4f} sd={results.std():.4f}")
+        print(f"{name} = {results.mean():.4f}")
