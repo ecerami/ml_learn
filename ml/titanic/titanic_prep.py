@@ -13,8 +13,8 @@ class TitanicPrep:
     """Prepare the Titanic Data Set."""
 
     drop_columns = ["PassengerId", "Name", "Ticket", "Cabin"]
-    num_columns = ["SibSp", "Parch", "Fare"]
-    cat_columns = ["Embarked", "Pclass", "Sex"]
+    num_columns = ["Pclass", "SibSp", "Parch", "Fare"]
+    cat_columns = ["Embarked", "Sex"]
     age_column = ["Age"]
 
     def __init__(self):
@@ -57,8 +57,7 @@ class TitanicPrep:
         # Hack to get all the new OHE column names
         cat_list = self.pipeline.transformers_[1][1][1].get_feature_names()
         cat_list = [x.replace("x0", "Embarked") for x in cat_list]
-        cat_list = [x.replace("x1", "Class") for x in cat_list]
-        cat_list = [x.replace("x2", "Sex") for x in cat_list]
+        cat_list = [x.replace("x1", "Sex") for x in cat_list]
 
         new_columns = []
         new_columns.extend(cat_list)

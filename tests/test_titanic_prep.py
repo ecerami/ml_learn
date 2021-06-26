@@ -11,7 +11,7 @@ def test_titanic_prep():
     training_X_prepared = prep.transform(training_X)
 
     # Verify number of new columns
-    assert len(training_X_prepared.columns) == 12
+    assert len(training_X_prepared.columns) == 10
 
     # Verify that one hot encoding worked on the zeroeth row
     row0 = training_X_prepared.iloc[0]
@@ -19,15 +19,9 @@ def test_titanic_prep():
     assert row0.Embarked_Q == 0
     assert row0.Embarked_S == 1
 
-    assert row0.Class_1 == 0
-    assert row0.Class_2 == 0
-    assert row0.Class_3 == 1
+    assert row0.Pclass == 0.8273772438659699
 
     assert row0.Sex_female == 0
     assert row0.Sex_male == 1
 
     assert row0.Adult == 1
-
-    # Verify MinMax Scaling
-    assert training_X_prepared["Fare"].max() <= 1
-    assert training_X_prepared["Fare"].min() >= 0

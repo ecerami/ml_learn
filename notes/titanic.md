@@ -72,3 +72,17 @@ Best score:  0.8282781997363632
 SVC is still the top scoring option.
 
 Kaggle score:  0.77751 (no change again!)
+
+# Experment #5
+
+Changed PClass back to a numerical value, because it is actually ordinal.
+
+Executing GridSearch to determine best SVC parameters.
+Best Parameter:  C --> 1.5
+Best Parameter:  kernel --> poly
+Best score:  0.8305128366078716
+
+SVC is marginally up.
+
+Kaggle score:  0.77990 (finally, an increase!)
+
