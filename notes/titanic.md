@@ -86,3 +86,16 @@ SVC is marginally up.
 
 Kaggle score:  0.77990 (finally, an increase!)
 
+# Experiment #7
+
+Reverted age back to continuous variable instead of binarized.
+
+Executing GridSearch to determine best SVC parameters.
+Best Parameter:  C --> 2
+Best Parameter:  kernel --> rbf
+Best score:  0.831648986253217
+
+SVC is marginally up.
+
+Kaggle score:  0.78229 (an increase!)
+
