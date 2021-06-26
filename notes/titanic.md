@@ -51,3 +51,24 @@ Random Forest = 0.8070
 SVC still the winner, but is only marginally better.
 
 Kaggle score:  0.77751 (no change again!)
+
+# Experiment #4
+
+Used GridSearch to try to optimize three models:
+
+Executing GridSearch to determine best KNN parameters.
+Best Parameter:  n_neighbors --> 4
+Best Parameter:  weights --> uniform
+Best score:  0.8092461239093591
+Executing GridSearch to determine best RFC parameters.
+Best Parameter:  criterion --> gini
+Best Parameter:  n_estimators --> 50
+Best score:  0.8159751428033394
+Executing GridSearch to determine best SVC parameters.
+Best Parameter:  C --> 0.5
+Best Parameter:  kernel --> poly
+Best score:  0.8282781997363632
+
+SVC is still the top scoring option.
+
+Kaggle score:  0.77751 (no change again!)

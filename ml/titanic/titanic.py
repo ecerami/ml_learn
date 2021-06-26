@@ -7,7 +7,9 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import GridSearchCV
 
 
 class TitanicPipeline:
@@ -41,13 +43,53 @@ class TitanicPipeline:
         ada = AdaBoostClassifier()
         self.assess_model("Ada Boost", ada, train_X, train_y)
 
+        gbc = GradientBoostingClassifier()
+        self.assess_model("Gradient Boost", gbc, train_X, train_y)
+
         rfc = RandomForestClassifier()
         self.assess_model("Random Forest", rfc, train_X, train_y)
+
+        print("Executing GridSearch to determine best KNN parameters.")
+        weight_list = ["uniform", "distance"]
+        neighbor_list = [3, 4, 5]
+        param_grid = [{"weights": weight_list, "n_neighbors": neighbor_list}]
+        knn = KNeighborsClassifier()
+        grid_search = GridSearchCV(knn, param_grid, cv=5, verbose=0)
+        grid_search.fit(train_X, train_y)
+        best_params = grid_search.best_params_
+        for param in best_params:
+            print(f"Best Parameter:  {param} --> {best_params[param]}")
+        print(f"Best score:  {grid_search.best_score_}")
+
+        print("Executing GridSearch to determine best RFC parameters.")
+        n_estimators = [50, 100, 150]
+        criterion_list = ["gini", "entropy"]
+        param_grid = [{"n_estimators": n_estimators, "criterion": criterion_list}]
+        rfc = RandomForestClassifier()
+        grid_search = GridSearchCV(rfc, param_grid, cv=5, verbose=0)
+        grid_search.fit(train_X, train_y)
+        best_params = grid_search.best_params_
+        for param in best_params:
+            print(f"Best Parameter:  {param} --> {best_params[param]}")
+        print(f"Best score:  {grid_search.best_score_}")
+
+        print("Executing GridSearch to determine best SVC parameters.")
+        c_list = [0.25, 0.5, 1.0, 1.5, 2]
+        kernel_list = ["linear", "poly", "rbf", "sigmoid"]
+        param_grid = [{"C": c_list, "kernel": kernel_list}]
+        svc = SVC()
+        grid_search = GridSearchCV(svc, param_grid, cv=5, verbose=0)
+        grid_search.fit(train_X, train_y)
+        best_params = grid_search.best_params_
+        for param in best_params:
+            print(f"Best Parameter:  {param} --> {best_params[param]}")
+        print(f"Best score:  {grid_search.best_score_}")
 
         print("Predicting on test data set.")
         test_df = pd.read_csv("data/titanic_test.csv")
         passengerIds = test_df["PassengerId"]
         test_X = prep.transform(test_df)
+        svc = SVC(C=0.5, kernel="poly")
         svc.fit(train_X, train_y)
         survived = svc.predict(test_X)
         submission_df = pd.DataFrame()
