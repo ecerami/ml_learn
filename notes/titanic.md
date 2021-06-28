@@ -95,7 +95,23 @@ Best Parameter:  C --> 2
 Best Parameter:  kernel --> rbf
 Best score:  0.831648986253217
 
-SVC is marginally up.
+SVC is still best, but now marginally up.
 
 Kaggle score:  0.78229 (an increase!)
 
+# Experiment #8
+
+Extracted deck level from Cabin column, e.g. B222 becomes Deck_B.
+
+Executing GridSearch to determine best SVC parameters.
+Best Parameter:  C --> 1.5
+Best Parameter:  kernel --> rbf
+Best score:  0.8260372857949909
+
+SCV is still best, but now marginally down.
+
+Kaggle score:  0.77511 (also down!)
+
+This is probably not too surprising given that most 2nd and 3rd class
+passengers have missing Cabin values; so, this may just really be a proxy for
+the already existing Pclass column.
