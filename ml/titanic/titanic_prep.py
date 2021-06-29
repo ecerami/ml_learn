@@ -2,10 +2,12 @@
 import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import Binarizer
-from sklearn.preprocessing import FunctionTransformer
+
+# from sklearn.preprocessing import MinMaxScaler
+# from sklearn.preprocessing import Binarizer
+# from sklearn.preprocessing import FunctionTransformer
+# from sklearn.preprocessing import KBinsDiscretizer
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 
@@ -25,7 +27,7 @@ class TitanicPrep:
         impute_scale = Pipeline(
             [
                 ("impute", SimpleImputer(strategy="median")),
-                ("scale", StandardScaler())
+                ("scale", StandardScaler()),
             ]
         )
         impute_ohe = Pipeline(
@@ -39,7 +41,7 @@ class TitanicPrep:
             [
                 ("impute", SimpleImputer(strategy="median")),
                 ("scale", StandardScaler())
-                #("binarize", Binarizer(threshold=12.0)),
+                # ("binarize", Binarizer(threshold=12.0)),
             ]
         )
 
@@ -64,6 +66,6 @@ class TitanicPrep:
         new_columns = []
         new_columns.extend(cat_list)
         new_columns.extend(self.num_columns)
-        new_columns.append("Adult")
+        new_columns.append("Age")
         new_X.columns = new_columns
         return new_X

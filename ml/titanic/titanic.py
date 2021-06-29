@@ -28,6 +28,7 @@ class TitanicPipeline:
         prep.fit(train_X)
         train_X = prep.transform(train_X)
 
+        print("Assessing ML Options.")
         knn = KNeighborsClassifier()
         self.assess_model("KNeighbors", knn, train_X, train_y)
 
@@ -56,22 +57,18 @@ class TitanicPipeline:
         knn = KNeighborsClassifier()
         grid_search = GridSearchCV(knn, param_grid, cv=5, verbose=0)
         grid_search.fit(train_X, train_y)
-        best_params = grid_search.best_params_
-        for param in best_params:
-            print(f"Best Parameter:  {param} --> {best_params[param]}")
-        print(f"Best score:  {grid_search.best_score_}")
+        self._output_grid_search_results(grid_search)
 
         print("Executing GridSearch to determine best RFC parameters.")
         n_estimators = [50, 100, 150]
         criterion_list = ["gini", "entropy"]
-        param_grid = [{"n_estimators": n_estimators, "criterion": criterion_list}]
+        param_grid = [
+            {"n_estimators": n_estimators, "criterion": criterion_list}
+        ]
         rfc = RandomForestClassifier()
         grid_search = GridSearchCV(rfc, param_grid, cv=5, verbose=0)
         grid_search.fit(train_X, train_y)
-        best_params = grid_search.best_params_
-        for param in best_params:
-            print(f"Best Parameter:  {param} --> {best_params[param]}")
-        print(f"Best score:  {grid_search.best_score_}")
+        self._output_grid_search_results(grid_search)
 
         print("Executing GridSearch to determine best SVC parameters.")
         c_list = [0.25, 0.5, 1.0, 1.5, 2]
@@ -80,10 +77,9 @@ class TitanicPipeline:
         svc = SVC()
         grid_search = GridSearchCV(svc, param_grid, cv=5, verbose=0)
         grid_search.fit(train_X, train_y)
-        best_params = grid_search.best_params_
-        for param in best_params:
-            print(f"Best Parameter:  {param} --> {best_params[param]}")
-        print(f"Best score:  {grid_search.best_score_}")
+        self._output_grid_search_results(grid_search)
+
+        self._determine_most_predictive_features(train_y, train_X)
 
         print("Predicting on test data set.")
         test_df = pd.read_csv("data/titanic_test.csv")
@@ -96,8 +92,25 @@ class TitanicPipeline:
         submission_df["PassengerId"] = passengerIds
         submission_df["Survived"] = survived
         out_name = "out/titanic_predictions.csv"
-        print (f"Writing predictions to {out_name}.")
+        print(f"Writing predictions to {out_name}.")
         submission_df.to_csv(out_name, sep=",", index=False)
+
+    def _output_grid_search_results(self, grid_search):
+        best_params = grid_search.best_params_
+        for param in best_params:
+            print(f"  - Best Parameter:  {param} --> {best_params[param]}")
+        print(f"  - Best score:  {grid_search.best_score_}")
+
+    def _determine_most_predictive_features(self, train_y, train_X):
+        print("Determining most predictive features.")
+        svc = SVC(kernel="linear")
+        svc.fit(train_X, train_y)
+        coef = svc.coef_[0]
+        feature_names = train_X.columns
+        predictors = list(zip(feature_names, coef))
+        predictors.sort(key=lambda x: abs(x[1]), reverse=True)
+        for predictor in predictors:
+            print(f"  - {predictor[0]}:  {predictor[1]}")
 
     def assess_model(self, name, model, train_X, train_y):
         results = cross_val_score(
@@ -108,4 +121,4 @@ class TitanicPipeline:
             verbose=0,
             scoring="accuracy",
         )
-        print(f"{name} = {results.mean():.4f}")
+        print(f"  - {name} = {results.mean():.4f}")

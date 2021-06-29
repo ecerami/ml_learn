@@ -23,5 +23,3 @@ def test_titanic_prep():
 
     assert row0.Sex_female == 0
     assert row0.Sex_male == 1
-
-    assert row0.Adult == 1
