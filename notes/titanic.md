@@ -115,3 +115,15 @@ Kaggle score:  0.77511 (also down!)
 This is probably not too surprising given that most 2nd and 3rd class
 passengers have missing Cabin values; so, this may just really be a proxy for
 the already existing Pclass column.
+
+# Experiment #9
+
+Found the best age cutoff to be 13.
+
+Executing GridSearch to determine best SVC parameters.
+  - Best Parameter:  C --> 2
+  - Best Parameter:  kernel --> rbf
+  - Best score:  0.8327600276191074
+
+Kaggle scoere:  0.77511 (but, this does not beat 0.78229 for age as continous.)
+So, not sure this was worth it.
