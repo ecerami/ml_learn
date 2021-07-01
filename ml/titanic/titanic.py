@@ -85,7 +85,7 @@ class TitanicPipeline:
         test_df = pd.read_csv("data/titanic_test.csv")
         passengerIds = test_df["PassengerId"]
         test_X = prep.transform(test_df)
-        svc = SVC(C=0.5, kernel="poly")
+        svc = SVC(C=1.5, kernel="rbf")
         svc.fit(train_X, train_y)
         survived = svc.predict(test_X)
         submission_df = pd.DataFrame()
