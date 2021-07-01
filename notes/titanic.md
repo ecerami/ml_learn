@@ -125,5 +125,15 @@ Executing GridSearch to determine best SVC parameters.
   - Best Parameter:  kernel --> rbf
   - Best score:  0.8327600276191074
 
-Kaggle scoere:  0.77511 (but, this does not beat 0.78229 for age as continous.)
+Kaggle score:  0.77511 (but, this does not beat 0.78229 for age as continuous.)
 So, not sure this was worth it.
+
+# Experment #10
+
+Found a clue here:  https://www.kaggle.com/qinyukun/titanic-advanced-feature-engineering-tutorial#3.-Model
+
+In a nutshell, there are several people with the title of "Master" and have
+missing ages.  We could impute that "Master" is a child, "Dr." and "Rev"
+are adults, etc.
+
+Kaggle score:  0.77511 (no change!)
