@@ -2,6 +2,11 @@ data/mnist_784.csv
 out/titanic_predictions.csv
 .DS_Store
 
+data/*.tar
+data/easy_ham/
+data/hard_ham/
+data/spam/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
