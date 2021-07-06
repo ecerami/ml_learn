@@ -1,5 +1,6 @@
 data/mnist_784.csv
-out/titanic_predictions.csv
+out/*.csv
+out/*.txt
 .DS_Store
 
 data/*.tar

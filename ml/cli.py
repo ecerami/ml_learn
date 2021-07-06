@@ -45,9 +45,9 @@ def titanic():
 
 
 @cli.command()
-def spam():
-    """Run the Spam Classifier Pipeline."""
-    output_header("Running the Spam Classifier Pipeline.")
+def spam_prepare():
+    """Run the Spam Pre-Processor Pipeline."""
+    output_header("Running the Spam Pre-Processor Pipeline.")
     pipeline = SpamPipeline()
     pipeline.execute_pipeline()
 
