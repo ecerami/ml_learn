@@ -3,6 +3,7 @@ out/titanic_predictions.csv
 .DS_Store
 
 data/*.tar
+data/*.bz*
 data/easy_ham/
 data/hard_ham/
 data/spam/
