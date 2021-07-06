@@ -2,6 +2,7 @@
 ML Command Line Interface (CLI).
 """
 import logging
+from ml.spam.spam_prepare import SpamPreparePipeline
 from ml.spam.spam import SpamPipeline
 from ml.titanic.titanic import TitanicPipeline
 from ml.mnist.mnist_shift import MnistShiftPipeline
@@ -48,8 +49,17 @@ def titanic():
 def spam_prepare():
     """Run the Spam Pre-Processor Pipeline."""
     output_header("Running the Spam Pre-Processor Pipeline.")
+    pipeline = SpamPreparePipeline()
+    pipeline.execute_pipeline()
+
+
+@cli.command()
+def spam():
+    """Run the Spam Classification Pipeline."""
+    output_header("Running the Spam Classification Pipeline.")
     pipeline = SpamPipeline()
     pipeline.execute_pipeline()
+
 
 def output_header(msg):
     """Output header with emphasis."""
