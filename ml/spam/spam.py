@@ -13,7 +13,7 @@ from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score
-from sklearn.metrics import f1_score, accuracy_score
+from sklearn.metrics import f1_score, accuracy_score, roc_auc_score
 
 
 class SpamPipeline:
@@ -90,9 +90,11 @@ class SpamPipeline:
         precision = precision_score(train_y, train_y_pred)
         recall = recall_score(train_y, train_y_pred)
         f1 = f1_score(train_y, train_y_pred)
+        auc = roc_auc_score(train_y, train_y_pred)
         print(name)
         print(f" - Accuracy:  {accuracy:.4f}")
         print(f" - Precision:  {precision:.4f}")
         print(f" - Recall:  {recall:.4f}")
         print(f" - F1:  {f1:.4f}")
+        print(f" - AUC:  {auc:.4f}")
         print(confusion_matrix(train_y, train_y_pred))
