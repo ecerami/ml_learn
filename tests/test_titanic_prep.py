@@ -4,7 +4,7 @@ from ml.titanic.titanic_prep import TitanicPrep
 
 def test_titanic_prep():
     """Test Titatic Data Prep."""
-    df = pd.read_csv("data/titanic_train.csv")
+    df = pd.read_csv("data/titanic/train.csv")
     training_X = df.drop("Survived", axis=1)
     prep = TitanicPrep()
     prep.fit(training_X)

@@ -5,6 +5,7 @@ import logging
 from ml.spam.spam_prepare import SpamPreparePipeline
 from ml.spam.spam import SpamPipeline
 from ml.titanic.titanic import TitanicPipeline
+from ml.twitter.twitter import TwitterPipeline
 from ml.mnist.mnist_shift import MnistShiftPipeline
 from ml.mnist.mnist import MnistPipeline
 import click
@@ -60,6 +61,12 @@ def spam():
     pipeline = SpamPipeline()
     pipeline.execute_pipeline()
 
+@cli.command()
+def twitter():
+    """Run the Twitter Disaster Classification Pipeline."""
+    output_header("Running the Twitter Disaster Classification Pipeline.")
+    pipeline = TwitterPipeline()
+    pipeline.execute_pipeline()
 
 def output_header(msg):
     """Output header with emphasis."""
