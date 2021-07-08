@@ -1,4 +1,5 @@
 # Get the Titanic Data Set
+# See:  https://www.kaggle.com/c/titanic/data
 get_titanic:
 	kaggle competitions download -c titanic
 	unzip -d titanic titanic.zip
