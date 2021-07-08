@@ -5,6 +5,9 @@ out/*.txt
 
 data/*.tar
 data/*.bz*
+data/*.zip
+data/twitter
+data/titanic
 data/easy_ham/
 data/hard_ham/
 data/spam/
