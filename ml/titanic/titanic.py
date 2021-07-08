@@ -18,7 +18,7 @@ class TitanicPipeline:
 
     def execute_pipeline(self):
         print("Loading Titanic Training Data Set.")
-        train_df = pd.read_csv("data/titanic_train.csv")
+        train_df = pd.read_csv("data/titanic/train.csv")
         print(f"Loaded data frame: {train_df.shape[0]} x {train_df.shape[1]}.")
         train_y = train_df["Survived"]
         train_X = train_df.drop("Survived", axis=1)
@@ -82,7 +82,7 @@ class TitanicPipeline:
         self._determine_most_predictive_features(train_y, train_X)
 
         print("Predicting on test data set.")
-        test_df = pd.read_csv("data/titanic_test.csv")
+        test_df = pd.read_csv("data/titanic/test.csv")
         passengerIds = test_df["PassengerId"]
         test_X = prep.transform(test_df)
         svc = SVC(C=1.5, kernel="rbf")
