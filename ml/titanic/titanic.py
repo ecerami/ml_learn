@@ -51,8 +51,8 @@ class TitanicPipeline:
         rfc = RandomForestClassifier()
         self.assess_model("Random Forest", rfc, train_X, train_y)
 
-        xgb = XGBClassifier()
-        self.assess_model("XGBoost", rfc, train_X, train_y)
+        xgb = XGBClassifier(use_label_encoder=False, eval_metric="error")
+        self.assess_model("XGBoost", xgb, train_X, train_y)
 
         print("Executing GridSearch to determine best KNN parameters.")
         weight_list = ["uniform", "distance"]
