@@ -2,10 +2,10 @@
 ML Command Line Interface (CLI).
 """
 import logging
-from ml.twitter.twitter_prepare import TwitterPreparePipeline
 from ml.spam.spam_prepare import SpamPreparePipeline
 from ml.spam.spam import SpamPipeline
 from ml.titanic.titanic import TitanicPipeline
+from ml.twitter.twitter_prepare import TwitterPreparePipeline
 from ml.twitter.twitter import TwitterPipeline
 from ml.mnist.mnist_shift import MnistShiftPipeline
 from ml.mnist.mnist import MnistPipeline

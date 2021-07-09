@@ -29,12 +29,11 @@ class TwitterPipeline:
             df = pd.read_csv(train_file)
             train_y = df["target"]
             text_list = df["text_prepared"]
-            token_list = self.transform_text(text_list)
             print("Creating Corpus.")
             vectorizer = TfidfVectorizer()
-            vectorizer.fit(token_list)
+            vectorizer.fit(text_list)
 
-            train_X = vectorizer.transform(token_list)
+            train_X = vectorizer.transform(text_list)
             self.assess_ml_options(train_y, train_X)
         else:
             print("Train/test files are missing.  Run twitter-prepare first.")
@@ -61,20 +60,6 @@ class TwitterPipeline:
 
         xgb = XGBClassifier(use_label_encoder=False, eval_metric="error")
         self.assess_model("XGBoost", xgb, train_X, train_y)
-
-    def transform_text(self, text_list):
-        print("Pre-processing Twitter messages.")
-        token_list = []
-        for i in progressbar.progressbar(range(len(text_list))):
-            text = text_list[i]
-            twitter_parser = TwitterParser(text)
-            token_str = " ".join(twitter_parser.get_final_token_list())
-            token_list.append(token_str)
-        return token_list
-
-    def read_file(self, file_name):
-        df = pd.read_csv(file_name)
-        return df
 
     def assess_model(self, name, model, train_X, train_y):
         train_y_pred = cross_val_predict(
