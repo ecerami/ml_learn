@@ -10,6 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GridSearchCV
+from xgboost import XGBClassifier
 
 
 class TitanicPipeline:
@@ -49,6 +50,9 @@ class TitanicPipeline:
 
         rfc = RandomForestClassifier()
         self.assess_model("Random Forest", rfc, train_X, train_y)
+
+        xgb = XGBClassifier()
+        self.assess_model("XGBoost", rfc, train_X, train_y)
 
         print("Executing GridSearch to determine best KNN parameters.")
         weight_list = ["uniform", "distance"]
