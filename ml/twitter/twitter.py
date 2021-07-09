@@ -12,11 +12,9 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import cross_val_predict
-from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score
 from sklearn.metrics import f1_score, accuracy_score, roc_auc_score
 from xgboost import XGBClassifier
-import progressbar
 
 
 class TwitterPipeline:
@@ -25,18 +23,34 @@ class TwitterPipeline:
 
     def execute_pipeline(self):
         train_file = "out/twitter_train.csv"
+        test_file = "out/twitter_test.csv"
         if os.path.isfile(train_file):
-            df = pd.read_csv(train_file)
-            train_y = df["target"]
-            text_list = df["text_prepared"]
+            train_df = pd.read_csv(train_file)
+            train_y = train_df["target"]
+            train_text_list = train_df["text_prepared"]
             print("Creating Corpus.")
             vectorizer = TfidfVectorizer()
-            vectorizer.fit(text_list)
+            vectorizer.fit(train_text_list)
 
-            train_X = vectorizer.transform(text_list)
+            train_X = vectorizer.transform(train_text_list)
             self.assess_ml_options(train_y, train_X)
+            self.predict_on_test_set(test_file, train_y, vectorizer, train_X)
         else:
             print("Train/test files are missing.  Run twitter-prepare first.")
+
+    def predict_on_test_set(self, test_file, train_y, vectorizer, train_X):
+        test_df = pd.read_csv(test_file)
+        test_text_list = test_df["text_prepared"]
+        test_X = vectorizer.transform(test_text_list)
+        sgd = SGDClassifier()
+        sgd.fit(train_X, train_y)
+        disaster = sgd.predict(test_X)
+        submission_df = pd.DataFrame()
+        submission_df["id"] = test_df["id"]
+        submission_df["target"] = disaster
+        out_name = "out/twitter_predictions.csv"
+        print(f"Writing predictions to {out_name}.")
+        submission_df.to_csv(out_name, sep=",", index=False)
 
     def assess_ml_options(self, train_y, train_X):
         print("Assessing ML Options.")
