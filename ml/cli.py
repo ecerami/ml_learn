@@ -2,6 +2,7 @@
 ML Command Line Interface (CLI).
 """
 import logging
+from ml.twitter.twitter_prepare import TwitterPreparePipeline
 from ml.spam.spam_prepare import SpamPreparePipeline
 from ml.spam.spam import SpamPipeline
 from ml.titanic.titanic import TitanicPipeline
@@ -60,6 +61,15 @@ def spam():
     output_header("Running the Spam Classification Pipeline.")
     pipeline = SpamPipeline()
     pipeline.execute_pipeline()
+
+
+@cli.command()
+def twitter_prepare():
+    """Run the Twitter Pre-Processor Pipeline."""
+    output_header("Running the Twitter Pre-Processor Pipeline.")
+    pipeline = TwitterPreparePipeline()
+    pipeline.execute_pipeline()
+
 
 @cli.command()
 def twitter():
