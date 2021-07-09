@@ -13,19 +13,23 @@ class TwitterPreparePipeline:
         train_file = "data/twitter/train.csv"
         test_file = "data/twitter/test.csv"
         train_out_file = "out/twitter_train.csv"
-        if os.path.isfile(train_file) and os.path.isfile(test_file):
-            df = self.read_file(train_file)
-            text_list = df["text"]
-            token_list = self.transform_text(text_list)
-            df["text_prepared"] = token_list
-            df.to_csv(train_out_file, sep=",", index=False)
-            print(f"Writing to:  {train_out_file}.")
-        else:
-            print("Train/test files are missing.  Download data first.")
+        test_out_file = "out/twitter_test.csv"
+        self.transform_file(train_file, train_out_file)
+        self.transform_file(test_file, test_out_file)            
 
-    def transform_text(self, text_list):
+    def transform_file(self, in_file, out_file):
+        if os.path.isfile(in_file):
+            df = self.read_file(in_file)
+            text_list = df["text"]
+            token_list = self.transform_text(in_file, out_file, text_list)
+            df["text_prepared"] = token_list
+            df.to_csv(out_file, sep=",", index=False)
+        else:
+            print(f"File: {in_file} is missing.  Download data first.")
+
+    def transform_text(self, in_file, out_file, text_list):
         twitter_parser = TwitterParser()
-        print("Pre-processing Twitter messages.")
+        print(f"Pre-processing Twitter messages:  {in_file} --> {out_file}")
         token_list = []
         for i in progressbar.progressbar(range(len(text_list))):
             text = text_list[i]
