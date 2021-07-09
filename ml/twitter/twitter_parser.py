@@ -1,41 +1,38 @@
 """Parses / Prepares Single Twitter Message."""
-import re
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
-from bs4 import BeautifulSoup
+import spacy
 
 
 class TwitterParser:
-    def __init__(self, msg):
-        """Construct pipeline."""
-        nltk.download("punkt", quiet=True)
-        nltk.download("stopwords", quiet=True)
+    def __init__(self):
+        """Construct Twitter Parser."""
+        self.nlp = spacy.load("en_core_web_sm")
 
-        # Strip HTML via Beautiful Soup
-        soup = BeautifulSoup(msg, "html.parser")
-        msg = soup.get_text()
+    def normalize(self, msg):
 
-        # Remove Punctuation and Numbers
-        msg = re.sub("[^A-Za-z]", " ", msg)
+        # Strip hash tags
+        msg = msg.replace("#", "")
 
-        # Covert to Lower Case
+        # Convert to lowercase
         msg = msg.lower()
 
-        # Tokenize, and remove stop words, e.g. and, the, etc.
-        tokens = word_tokenize(msg)
-        non_stop_tokens = []
-        for word in tokens:
-            if word not in stopwords.words("english") and len(word) > 1:
-                non_stop_tokens.append(word)
+        doc = self.nlp(msg)
+        #self.debug_doc(doc)
 
-        # Stem all words, e.g. running --> run
-        self.final_tokens = []
-        stemmer = PorterStemmer()
-        for token in non_stop_tokens:
-            self.final_tokens.append(stemmer.stem(token))
+        final_tokens = []
+        for token in doc:
+            if not token.is_stop:
+                final_tokens.append(token.lemma_)
+        return final_tokens
 
-    def get_final_token_list(self):
-        """Get the final list of parsed tokens."""
-        return self.final_tokens
+    def debug_doc(self, doc):
+        for token in doc:
+            print(
+                token.text,
+                token.lemma_,
+                token.pos_,
+                token.tag_,
+                token.dep_,
+                token.shape_,
+                token.is_alpha,
+                token.is_stop,
+            )

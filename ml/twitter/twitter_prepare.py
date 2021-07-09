@@ -24,12 +24,12 @@ class TwitterPreparePipeline:
             print("Train/test files are missing.  Download data first.")
 
     def transform_text(self, text_list):
+        twitter_parser = TwitterParser()
         print("Pre-processing Twitter messages.")
         token_list = []
         for i in progressbar.progressbar(range(len(text_list))):
             text = text_list[i]
-            twitter_parser = TwitterParser(text)
-            token_str = " ".join(twitter_parser.get_final_token_list())
+            token_str = " ".join(twitter_parser.normalize(text))
             token_list.append(token_str)
         return token_list
 

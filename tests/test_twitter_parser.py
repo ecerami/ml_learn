@@ -2,24 +2,23 @@ from ml.twitter.twitter_parser import TwitterParser
 
 
 def test_twitter_parser():
-    parser = TwitterParser("the quick brown FOX jumped over the Dogs")
-    actual_tokens = parser.get_final_token_list()
+    parser = TwitterParser()
+    actual_tokens = parser.normalize("the quick brown foxes "
+        + "jumped over the dogs")
     expected_tokens = ["quick", "brown", "fox", "jump", "dog"]
     verify_tokens(actual_tokens, expected_tokens)
 
-    parser = TwitterParser(
-        "Just got sent this photo from Ruby #Alaska"
-        + " as smoke from #wildfires pours into a school"
+    actual_tokens = parser.normalize ("Just got sent this "
+        "photo from Ruby #Alaska as smoke from #wildfires pours into a school"
     )
-    actual_tokens = parser.get_final_token_list()
     expected_tokens = [
         "got",
-        "sent",
+        "send",
         "photo",
-        "rubi",
+        "ruby",
         "alaska",
         "smoke",
-        "wildfir",
+        "wildfire",
         "pour",
         "school",
     ]

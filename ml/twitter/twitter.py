@@ -80,4 +80,4 @@ class TwitterPipeline:
         print(f" - Recall:  {recall:.4f}")
         print(f" - F1:  {f1:.4f}")
         print(f" - AUC:  {auc:.4f}")
-        print(confusion_matrix(train_y, train_y_pred))
+        #print(confusion_matrix(train_y, train_y_pred))
