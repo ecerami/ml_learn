@@ -16,6 +16,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score
 from sklearn.metrics import f1_score, accuracy_score, roc_auc_score
+from xgboost import XGBClassifier
 import progressbar
 
 
@@ -32,7 +33,7 @@ class TwitterPipeline:
             text_list = df["text"]
             token_list = self.transform_text(text_list)
             print("Creating Corpus.")
-            vectorizer = CountVectorizer()
+            vectorizer = TfidfVectorizer()
             vectorizer.fit(token_list)
 
             train_X = vectorizer.transform(token_list)
@@ -59,6 +60,9 @@ class TwitterPipeline:
 
         rfc = RandomForestClassifier()
         self.assess_model("Random Forest", rfc, train_X, train_y)
+
+        xgb = XGBClassifier(use_label_encoder=False, eval_metric="error")
+        self.assess_model("XGBoost", xgb, train_X, train_y)
 
     def transform_text(self, text_list):
         print("Pre-processing Twitter messages.")
