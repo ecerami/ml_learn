@@ -78,6 +78,7 @@ def twitter():
     pipeline = TwitterPipeline()
     pipeline.execute_pipeline()
 
+
 def output_header(msg):
     """Output header with emphasis."""
     click.echo(click.style(msg, fg="green"))

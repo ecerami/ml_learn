@@ -1,5 +1,3 @@
-import email
-import pandas as pd
 from ml.spam.email_parser import EmailParser
 
 

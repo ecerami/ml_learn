@@ -1,6 +1,5 @@
 """Run the Spam Pre-Processing Pipeline."""
 from ml.spam.email_parser import EmailParser
-from sklearn.feature_extraction.text import CountVectorizer
 import glob
 from random import seed
 from random import random
@@ -32,9 +31,13 @@ class SpamPreparePipeline:
         for i in progressbar.progressbar(range(len(file_list))):
             current_file = file_list[i]
             email_parser = EmailParser(current_file)
-            self.write_email_out(current_file, spam_flag, email_parser, train_fd, test_fd)
+            self.write_email_out(
+                current_file, spam_flag, email_parser, train_fd, test_fd
+            )
 
-    def write_email_out(self, current_file, spam_flag, email_parser, train_fd, test_fd):
+    def write_email_out(
+        self, current_file, spam_flag, email_parser, train_fd, test_fd
+    ):
         r = random()
         token_str = " ".join(email_parser.get_final_token_list())
         out_str = f"{spam_flag}\t{current_file}\t{token_str}\n"

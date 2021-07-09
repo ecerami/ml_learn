@@ -2,7 +2,8 @@
 from ml.twitter.twitter_parser import TwitterParser
 import os.path
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
+
+# from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import SGDClassifier
@@ -10,9 +11,7 @@ from sklearn.svm import SVC
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import cross_val_predict
-from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score
 from sklearn.metrics import f1_score, accuracy_score, roc_auc_score
@@ -25,12 +24,11 @@ class TwitterPipeline:
         """Construct pipeline."""
 
     def execute_pipeline(self):
-        train_file = "data/twitter/train.csv"
-        test_file = "data/twitter/test.csv"
-        if os.path.isfile(train_file) and os.path.isfile(test_file):
-            df = self.read_file(train_file)
+        train_file = "out/twitter_train.csv"
+        if os.path.isfile(train_file):
+            df = pd.read_csv(train_file)
             train_y = df["target"]
-            text_list = df["text"]
+            text_list = df["text_prepared"]
             token_list = self.transform_text(text_list)
             print("Creating Corpus.")
             vectorizer = TfidfVectorizer()
@@ -39,7 +37,7 @@ class TwitterPipeline:
             train_X = vectorizer.transform(token_list)
             self.assess_ml_options(train_y, train_X)
         else:
-            print("Train/test files are missing.  Download data first.")
+            print("Train/test files are missing.  Run twitter-prepare first.")
 
     def assess_ml_options(self, train_y, train_X):
         print("Assessing ML Options.")

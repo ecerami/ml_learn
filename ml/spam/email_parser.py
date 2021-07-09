@@ -7,6 +7,7 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from bs4 import BeautifulSoup
 
+
 class EmailParser:
     def __init__(self, f):
         """Construct pipeline."""

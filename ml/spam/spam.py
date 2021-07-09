@@ -1,6 +1,5 @@
 """Run the Spam Classification Pipeline."""
 import os.path
-from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import SGDClassifier
@@ -8,9 +7,7 @@ from sklearn.svm import SVC
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import cross_val_predict
-from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score
 from sklearn.metrics import f1_score, accuracy_score, roc_auc_score
@@ -26,7 +23,7 @@ class SpamPipeline:
         if os.path.isfile(train_file) and os.path.isfile(test_file):
             train_y, token_list = self.read_file(train_file)
             print("Creating Corpus.")
-            #vectorizer = CountVectorizer()
+            # vectorizer = CountVectorizer()
             vectorizer = TfidfVectorizer()
             vectorizer.fit(token_list)
 
