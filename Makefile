@@ -32,8 +32,5 @@ clean:
 	rm -rf *.egg-info
 	coverage erase
 
-run_api:
-	uvicorn luna.api.api:app --reload --host 0.0.0.0 --port 8000
-
-run_api_prod:
-	uvicorn luna.api.api:app --host 0.0.0.0 --port 8000
+submit_kaggle_twitter:
+	kaggle competitions submit -c nlp-getting-started -f out/twitter_predictions.csv -m "Latest"
