@@ -9,6 +9,7 @@ from ml.twitter.twitter_prepare import TwitterPreparePipeline
 from ml.twitter.twitter import TwitterPipeline
 from ml.mnist.mnist_shift import MnistShiftPipeline
 from ml.mnist.mnist import MnistPipeline
+from ml.random.random import RandomNumberGeneratorPipeline
 import click
 import emoji
 
@@ -78,6 +79,13 @@ def twitter():
     pipeline = TwitterPipeline()
     pipeline.execute_pipeline()
 
+
+@cli.command()
+def random():
+    """Run the Random Number Generator."""
+    output_header("Running the Random Number Generator.")
+    pipeline = RandomNumberGeneratorPipeline()
+    pipeline.execute_pipeline()
 
 def output_header(msg):
     """Output header with emphasis."""
