@@ -33,7 +33,6 @@ class HousingRegressionPipeline:
         """Construct pipeline."""
 
     def execute_pipeline(self):
-        # ML Workflow
         df = self.load_data()
         train_set, test_set = self.split_data(df)
 
