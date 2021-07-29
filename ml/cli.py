@@ -2,6 +2,7 @@
 ML Command Line Interface (CLI).
 """
 import logging
+from ml.housing.housing import HousingRegressionPipeline
 from ml.spam.spam_prepare import SpamPreparePipeline
 from ml.spam.spam import SpamPipeline
 from ml.titanic.titanic import TitanicPipeline
@@ -22,6 +23,14 @@ def cli(verbose):
     if verbose:
         log_level = logging.INFO
     logging.basicConfig(level=log_level, format="%(levelname)s:%(message)s")
+
+
+@cli.command()
+def housing():
+    """Run the Housing Regression Pipeline."""
+    output_header("Running the Housing Regression Pipeline.")
+    pipeline = HousingRegressionPipeline()
+    pipeline.execute_pipeline()
 
 
 @cli.command()
