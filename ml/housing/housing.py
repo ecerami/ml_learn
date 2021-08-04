@@ -17,6 +17,7 @@ import time
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import SGDRegressor
 from sklearn import svm
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -83,11 +84,13 @@ class HousingRegressionPipeline:
         model2 = RandomForestRegressor()
         model3 = svm.SVR(kernel="linear")
         model4 = svm.SVR(kernel = "rbf")
+        model5 = SGDRegressor()
 
         self.assess_model("Linear", model1, training_df, train_labels)
         self.assess_model("Random Forest", model2, training_df, train_labels)
         self.assess_model("SVR: Linear", model3, training_df, train_labels)
         self.assess_model("SVR: RBF", model4, training_df, train_labels)
+        self.assess_model("SGD: Stochastic", model5, training_df, train_labels)
 
 
     def assess_model(self, model_name, model, training_df, train_labels):
