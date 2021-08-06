@@ -85,12 +85,16 @@ class HousingRegressionPipeline:
         model3 = svm.SVR(kernel="linear")
         model4 = svm.SVR(kernel = "rbf")
         model5 = SGDRegressor()
+        model6 = SGDRegressor(penalty="l1")
+        model7 = SGDRegressor(penalty="l2")
 
         self.assess_model("Linear", model1, training_df, train_labels)
         self.assess_model("Random Forest", model2, training_df, train_labels)
         self.assess_model("SVR: Linear", model3, training_df, train_labels)
         self.assess_model("SVR: RBF", model4, training_df, train_labels)
-        self.assess_model("SGD: Stochastic", model5, training_df, train_labels)
+        self.assess_model("SGD", model5, training_df, train_labels)
+        self.assess_model("SGD: L1 Lasso", model6, training_df, train_labels)
+        self.assess_model("SGD: L2 Ridge", model7, training_df, train_labels)
 
 
     def assess_model(self, model_name, model, training_df, train_labels):
