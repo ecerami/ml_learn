@@ -18,6 +18,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import SGDRegressor
+from sklearn.linear_model import ElasticNet
 from sklearn import svm
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -36,6 +37,8 @@ class HousingRegressionPipeline:
     def execute_pipeline(self):
         df = self.load_data()
         train_set, test_set = self.split_data(df)
+        print(f"Total number of training instances:  {train_set.shape[0]}")
+        print(f"Total number of test instances:  {test_set.shape[0]}")
 
         # Prepare Training Set
         LABEL_NAME = "median_house_value"
@@ -87,6 +90,7 @@ class HousingRegressionPipeline:
         model5 = SGDRegressor()
         model6 = SGDRegressor(penalty="l1")
         model7 = SGDRegressor(penalty="l2")
+        model8 = ElasticNet()
 
         self.assess_model("Linear", model1, training_df, train_labels)
         self.assess_model("Random Forest", model2, training_df, train_labels)
@@ -95,6 +99,7 @@ class HousingRegressionPipeline:
         self.assess_model("SGD", model5, training_df, train_labels)
         self.assess_model("SGD: L1 Lasso", model6, training_df, train_labels)
         self.assess_model("SGD: L2 Ridge", model7, training_df, train_labels)
+        self.assess_model("Elastic Net", model8, training_df, train_labels)
 
 
     def assess_model(self, model_name, model, training_df, train_labels):
@@ -110,4 +115,4 @@ class HousingRegressionPipeline:
         mean_score = np.sqrt(-scores).mean()
         stop = time.time()
         duration = stop - start
-        print(f"{model_name} -> {mean_score:0.2f} [{duration:0.2f} sec]")
+        print(f"{model_name} -> {mean_score:,.2f} [{duration:0.2f} sec]")
