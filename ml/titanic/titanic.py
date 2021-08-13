@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import SGDClassifier
 from sklearn.naive_bayes import GaussianNB
+from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -53,6 +54,9 @@ class TitanicPipeline:
 
         xgb = XGBClassifier(use_label_encoder=False, eval_metric="error")
         self.assess_model("XGBoost", xgb, train_X, train_y)
+
+        logit = LogisticRegression()
+        self.assess_model("Logistic Regression", rfc, train_X, train_y)
 
         print("Executing GridSearch to determine best KNN parameters.")
         weight_list = ["uniform", "distance"]
