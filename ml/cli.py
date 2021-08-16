@@ -2,6 +2,7 @@
 ML Command Line Interface (CLI).
 """
 import logging
+from ml.iris.iris import IrisPipeline
 from ml.housing.housing import HousingRegressionPipeline
 from ml.spam.spam_prepare import SpamPreparePipeline
 from ml.spam.spam import SpamPipeline
@@ -54,6 +55,13 @@ def titanic():
     """Run the Titanic Classifier Pipeline."""
     output_header("Running the Titanic Classifier Pipeline.")
     pipeline = TitanicPipeline()
+    pipeline.execute_pipeline()
+
+@cli.command()
+def iris():
+    """Run the Iris Classifier Pipeline."""
+    output_header("Running the Iris Classifier Pipeline.")
+    pipeline = IrisPipeline()
     pipeline.execute_pipeline()
 
 

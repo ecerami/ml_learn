@@ -56,7 +56,7 @@ class TitanicPipeline:
         self.assess_model("XGBoost", xgb, train_X, train_y)
 
         logit = LogisticRegression()
-        self.assess_model("Logistic Regression", rfc, train_X, train_y)
+        self.assess_model("Logistic Regression", logit, train_X, train_y)
 
         print("Executing GridSearch to determine best KNN parameters.")
         weight_list = ["uniform", "distance"]
